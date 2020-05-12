@@ -17,8 +17,8 @@
 # For https://retropie.org.uk/
 
 ###### --------------------- INIT ---------------------
-readonly VERSION="1.40_072518"
-readonly TITLE="OpenBOR - cyperghosts BOR'n'more selector"
+readonly VERSION="1.41_20200512"
+readonly TITLE="OpenBOR - Seletor de Jogos"
 readonly ROOTDIR="/opt/retropie"
 readonly BORBASE_DIR="/home/pi/RetroPie/roms/ports/openbor"
 readonly MASTERCONF_DIR="/home/pi/RetroPie/roms/ports/openbor"
@@ -92,12 +92,12 @@ function dialog_selectBOR() {
 
     cmd=(dialog --backtitle " $TITLE - $VERSION " \
                 --default-item "${BOR_file#*----}" \
-                --title " Select your Beats of Rage Episode " \
-                --ok-label " Select " \
-                --cancel-label " Exit to ES " \
-                --extra-button --extra-label " JoyPad Config "
+                --title " Selecione o seu jogo " \
+                --ok-label " Selecionar " \
+                --cancel-label " Voltar para Fredopie " \
+                --extra-button --extra-label " Configurar Controles "
                 --no-tags --stdout \
-                --menu "There are $((${#dialog_array[@]}/2)) games available\nWhich you want to play:" 16 70 16)
+                --menu "Existem $((${#dialog_array[@]}/2)) jogo(s) listado(s)\nEscolha na lista abaixo:" 16 70 16)
     choices=$("${cmd[@]}" "${dialog_array[@]}")
     echo "$?----$choices"
 
@@ -176,7 +176,7 @@ while true; do
 
             1) # Cancel Button
                end_joy
-               show_msg "No Selection made...Returning to ES!" "2" " Really? :( "
+               show_msg "Retornando para o menu FredoPie!" "2" " ... "
                exit
             ;;
 
