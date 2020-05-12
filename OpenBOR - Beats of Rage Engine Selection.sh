@@ -153,7 +153,7 @@ else
 fi
 
 # Start Selection Dialog
-
+killall joy2key.py
 start_joy
 
 while true; do
@@ -193,7 +193,9 @@ done
 
 # End Selection Dialog
 
-end_joy; sleep 0.5
+end_joy;
+killall joy2key.py
+sleep 0.5
 
 # Finally using RUNCOMMAND.SH to initiate proper start of selected game
 
