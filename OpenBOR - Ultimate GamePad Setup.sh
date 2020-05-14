@@ -12,7 +12,7 @@
 ###### --------------------- INIT ---------------------
 readonly MASTERCONF_DIR="/home/pi/RetroPie/roms/ports/openbor"
 readonly KEYCONF_DIR="/opt/retropie/configs/ports/openbor/Saves"
-readonly JOYPAD_GITHUB="http://raw.githubusercontent.com/crcerror/RetroPie-OpenBOR-scripts/master/joypad/joypadlist.txt"
+readonly JOYPAD_GITHUB="http://raw.githubusercontent.com/fredcobain/RetroPie-OpenBOR-scripts/master/joypad/joypadlist.txt"
 ######
 readonly BACKTITLE=" cyperghosts OpenBOR easy Joypad config "
 ###### --------------------- INIT ---------------------
@@ -61,16 +61,16 @@ function get_file() {
     local check_connection=$(wget --spider "$git_address" 2>&1 | grep -c "404 Not Found")
 
     if [[ ! -d "$cfg_location" ]]; then
-        show_info "Directory not found!\n\n$cfg_location\n\nPlease correct settings!\n\nReturn to runcommand in 10 seconds!" "10" " Error! Missing directory! "
+        show_info "Diretorio nao encontrado!\n\n$cfg_location\n\nFavor Corrigir!\n\nRetornando em 10 segundos!" "10" " Erro! Diretorio nao encontrado! "
         exit 1
     elif [[ ! -s "$cfg_location/$git_filename" && $check_connection -gt 0 ]]; then
-        show_msg "Sourcefile not found! I was unable to locate \"$git_filename\" in \"$cfg_location\" nor I could download it from $git_address" " Error! Missing files! " 
+        show_msg "Arquivo fonte nao encontrado! Arquivo \"$git_filename\" em \"$cfg_location\" nao encontrado em $git_address" " Erro! Arquivos nao encontrados! " 
         return
     elif [[ -s "$cfg_location/$git_filename" ]]; then
-        show_yesno "The file $git_filename is already available.\n\nCan I overwrite it?" " Old $git_filename found! "
+        show_yesno "The file $git_filename disponivel.\n\nPosso sobrescrever?" " Old $git_filename found! "
         [[ $? == 0 ]] && wget -q "$git_address" -O "$cfg_location/$git_filename"
     elif [[ $check_connection -gt 0 ]]; then
-        show_info "There are server issues!\n\nReturning now....." "4" " Error: Server issues! "
+        show_info "Erro no servidor!\n\nRetornando....." "4" " Erro: Servidor! "
         return
     else
         wget -q "$git_address" -O "$cfg_location/$git_filename"
@@ -84,11 +84,11 @@ function get_file() {
     [[ $((${#array[@]}%2)) != 0 ]] && unset array[${#array[@]}-1]
 
     cmd=(dialog --backtitle "$BACKTITLE" \
-                --title " Setup OpenBOR - Download ready setted JoyPad files "
-                --ok-label " Select " \
-                --cancel-label " Return " \
+                --title " Setup OpenBOR - Download dos Arquivos Pre Configurados "
+                --ok-label " Selecionar " \
+                --cancel-label " Voltar " \
                 --no-tags --stdout \
-                --menu "OpenBOR Addon: \"${BOR_file:0:-4}\"\n\nConfig files will be downloaded and named to:\n$cfg_location/$filename" 16 70 8)
+                --menu "OpenBOR Addon: \"${BOR_file:0:-4}\"\n\nArquivos de configuracao serao baixados e salvos em:\n$cfg_location/$filename" 16 70 8)
     git_address=$("${cmd[@]}" "${array[@]}")
     [[ $? == 1 ]] && return
 
@@ -98,21 +98,21 @@ function get_file() {
         show_msg "Server reported: 404 Not Found\nFailed to download config file from:\n\n$git_address\n\nSorry for that...." " Error: Setup config file! "
         return
     elif [[ -s "$cfg_location/$filename" && "$filename" == "master.bor.cfg" ]]; then
-        show_yesno "Master config file is already setted!\nDo you want to override?" " Master file setted! "
+        show_yesno "Config master ja existente!\nDeseja sobrescrever?" " Config master ja setada! "
         [[ $? == 1 ]] && return
     elif [[ -s "$cfg_location/$filename" ]]; then
-        show_yesno "Game config file is already setted!\nDo you want to override?" " Game file setted! "
+        show_yesno "Config do jogo ja existente!\nDeseja sobrescrever?" " Config do jogo ja setada! "
         [[ $? == 1 ]] && return
     fi
 
     wget -q "$git_address" -O "$cfg_location/$filename"
 
     if [[ -s "$cfg_location/$filename" && "$filename" == "master.bor.cfg" ]]; then
-         show_msg "Master file successfully downloaded! Setted file to:\n\n$cfg_location/$filename" " Congrats! Master file setted! "
+         show_msg "Arquivo MASTER baixado! Salvo em:\n\n$cfg_location/$filename" " Parabens! Master file ok! "
     elif [[ -s "$cfg_location/$filename" ]]; then
-        show_msg "Config file successfully downloaded! Setted file to:\n\n$BOR_cfg" " Congrats! Config file setted! "
+        show_msg "Config file successfully downloaded! Setted file to:\n\n$BOR_cfg" " Parabens! Config file ok! "
     else
-        show_msg "Failed to download any config file from:\n\n$git_address\n\nOr file contains zerofiles\n\nSorry for that...." " Error: Setup config file! "
+        show_msg "Erro no download a partir de:\n\n$git_address\n\nOr file contains zerofiles\n\nSorry for that...." " Error: Setup config file! "
     fi
 
 }
@@ -142,7 +142,7 @@ function remove_items() {
 
     # 1. Check is emulator "openbor" running
     if [[ "$emulator" != "openbor" ]]; then
-        show_info "This script is intended to work only with emulator \"openbor\"\n    not ${emulator^^}\nGoing back to runcommand now...." "5" " Error! "
+        show_info "Esse script funciona somente para o emulador \"openbor\"\n    not ${emulator^^}\nVoltando para o RUNCOMMAND...." "5" " Error! "
         exit 0
     fi
 
@@ -150,14 +150,14 @@ function remove_items() {
     while true; do
 
 
-        array=("0" "Start OpenBOR gaming engine" \
-               "1" "Master config --> Game config" \
-               "2" "Game config --> Master config" \
-               "3" "Github Controller list --> Master config" \
-               "4" "Github Controller list --> Game config" \
-               "5" "Remove current Game configuration" \
-               "6" "Remove current Master configuration" \
-               "7" "Exit to runcommand")
+        array=("0" "Iniciar OPENBOR" \
+               "1" "MASTER config --> JOGO config" \
+               "2" "JOGO config --> MASTER config" \
+               "3" "Lista Github  --> MASTER config" \
+               "4" "Lista Github  --> GAME config" \
+               "5" "APAGAR configuracoes do GAME" \
+               "6" "APAGAR configuracao MASTER" \
+               "7" "Voltar para o RUNCOMMAND")
 
     # 3.Check config files and enable/disable array textes
         [[ ! -s $BOR_cfg && -s $MASTERCONF_DIR/master.bor.cfg ]] && remove_items 0 2 3 5
@@ -181,12 +181,12 @@ function remove_items() {
 
                 1) # Copy Master config to Game config
                    cp -f "$MASTERCONF_DIR/master.bor.cfg" "$BOR_cfg"
-                   show_info "Setting up: \"${BOR_file:0:-4}\"\n\nCopied config-file from:\n\"$MASTERCONF_DIR/master.bor.cfg\"\n    to:\n\"$BOR_cfg\"\n\nSelect 0 to start game! Please wait!" "8" " Setting up ... "
+                   show_info "Configurando: \"${BOR_file:0:-4}\"\n\nConfiguracao copiada de:\n\"$MASTERCONF_DIR/master.bor.cfg\"\n    para:\n\"$BOR_cfg\"\n\nAguarde!" "8" " Configurando ... "
                 ;;
 
                 2) # Copy Game config to Master config
                    cp -f "$BOR_cfg" "$MASTERCONF_DIR/master.bor.cfg" 
-                   show_info "Setting up: \"${BOR_file:0:-4}\"\n\nCopied config-file from:\n\"$BOR_cfg\"\n    to:\n\"$MASTERCONF_DIR/master.bor.cfg\"\n\nSelect 0 to start game! Please wait!" "8" " Setting up ... "
+                   show_info "Configurando: \"${BOR_file:0:-4}\"\n\nConfiguracao copiada de:\n\"$BOR_cfg\"\n    para:\n\"$MASTERCONF_DIR/master.bor.cfg\"\n\nAguarde!" "8" " Configurando ... "
                 ;;
 
                 3) # Download Master config from github
@@ -198,12 +198,12 @@ function remove_items() {
                 ;;
 
                 5) # Delete current Game config
-                   show_yesno "Setting up: \"${BOR_file:0:-4}\"\n\nFound Config-file:\n\"$BOR_cfg\"\n\nDelete your Game configuration?" " Delete: Game config file! "
+                   show_yesno "Configurando: \"${BOR_file:0:-4}\"\n\nArquivo de configuracao do jogo encontrado:\n\"$BOR_cfg\"\n\nApagar o arquivo de configuracao do jogo?" " Apagar: GAME config! "
                    [[ $? == 0 ]] && rm -f "$BOR_cfg"
                 ;;
 
                 6) # Delete current Master config
-                   show_yesno "Setting up: \"${BOR_file:0:-4}\"\n\nFound Master-file:\n\"$MASTERCONF_DIR/master.bor.cfg\"\n\nDelete your Master configuration?" " Delete MASTER file! "
+                   show_yesno "Configurando: \"${BOR_file:0:-4}\"\n\nArquivo MASTER encontrado:\n\"$MASTERCONF_DIR/master.bor.cfg\"\n\nApagar o arquivo de configuracao MASTER?" " Apagar: Master config! "
                    [[ $? == 0 ]] && rm -f "$MASTERCONF_DIR/master.bor.cfg"
                 ;;
 
