@@ -17,7 +17,7 @@
 # For https://retropie.org.uk/
 
 ###### --------------------- INIT ---------------------
-readonly VERSION="1.41_20200512"
+readonly VERSION="1.41_20200514"
 readonly TITLE="OpenBOR - Seletor de Jogos"
 readonly ROOTDIR="/opt/retropie"
 readonly BORBASE_DIR="/home/pi/RetroPie/roms/ports/openbor"
@@ -145,10 +145,10 @@ function build_find_array() {
 if [[ -d $BORBASE_DIR ]]; then
     cd "$BORBASE_DIR"
     bor_files=$(find -maxdepth 1 -iname "*.bor" -type d | sort 2>/dev/null)
-    [[ -z $bor_files ]] && show_msg "No BOR-game found in location:\n\n$BORBASE_DIR" "3" " Error! " && exit
+    [[ -z $bor_files ]] && show_msg "Nenhum jogo localizado em:\n\n$BORBASE_DIR" "3" " Erro! " && exit
     build_find_array "$bor_files"
 else
-    show_msg "No $BORBASE_DIR found!" "3" " Fatal error! "
+    show_msg "Diretorio $BORBASE_DIR nao encontrado!" "3" " Fatal error! "
     exit
 fi
 
@@ -166,9 +166,9 @@ while true; do
                 BOR_cfg="$KEYCONF_DIR${BOR_file#*.}.cfg"
                 if [[ ! -f $BOR_cfg && -f $MASTERCONF_DIR/master.bor.cfg  ]]; then
                     cp "$MASTERCONF_DIR/master.bor.cfg" "$BOR_cfg"
-                    show_msg "Copied config-file from:\n$MASTERCONF_DIR/master.bor.cfg\n    to:\n$BOR_cfg\n\nStarting game \"${BOR_file:7:-4}\" in a few seconds!" "8" " Setup controller! "
+                    show_msg "Arquivo de conf. copiado de:\n$MASTERCONF_DIR/master.bor.cfg\n    para:\n$BOR_cfg\n\nStarting game \"${BOR_file:7:-4}\" em alguns segundos!" "8" " Configurando Controles! "
                 elif [[ ! -f $BOR_cfg && ! -f $MASTERCONF_DIR/master.bor.cfg  ]]; then
-                    show_yesno "Game \"${BOR_file:7:-4}\" is unconfigurated!\n\nPlease setup JoyPads before going to BRAWL\n\nSelect NO if you want to start an unconfigurated game....\nRemember to configurate your inputs in OpenBOR! This selection box will only appear on first startup!" " Setup controller! "
+                    show_yesno "Jogo \"${BOR_file:7:-4}\" sem arquivo de configuracao!\n\nConfigure os controles antes de ir para o jogo\n\nSelecione NAO se deseja iniciar sem essa configuracao....\nSe lembre de configurar os contorles no jogo! Essa opcao so esta disponivel uma vez!" " Configuracao de Controle! "
                     [[ $? == 0 ]] && continue
                 fi
                 break
@@ -184,7 +184,7 @@ while true; do
                 if [[ -s $JOYPAD_SCRIPT ]]; then
                     bash "$JOYPAD_SCRIPT" "openbor" "configscript" "$BORBASE_DIR${BOR_file#*.}"
                 else
-                    show_msg "JoyPad configuration script not found in:\n\n$JOYPAD_SCRIPT" "5" " Error: Script missing! "
+                    show_msg "Arquivo de configuracao de controles nao encontrado em:\n\n$JOYPAD_SCRIPT" "5" " Erro: Script faltando! "
                 fi
             ;;
         esac
