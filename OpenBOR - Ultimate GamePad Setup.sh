@@ -168,8 +168,8 @@ function remove_items() {
 
         cmd=(dialog --backtitle "$BACKTITLE" \
                     --title " Setup OpenBOR - Beats of Rage Engine "
-                    --ok-label " Select " \
-                    --cancel-label " Cancel " \
+                    --ok-label " Selecionar " \
+                    --cancel-label " Voltar " \
                     --stdout \
                     --menu "OpenBOR Addon: \"${BOR_file:0:-4}\"\n\nConfig file: $BOR_cfg\nMaster file: $MASTERCONF_DIR/master.bor.cfg" 18 70 8)
         choices=$("${cmd[@]}" "${array[@]}")
