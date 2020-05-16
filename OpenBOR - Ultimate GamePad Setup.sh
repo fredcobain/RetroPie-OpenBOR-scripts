@@ -10,11 +10,13 @@
 # For https://retropie.org.uk/
 
 ###### --------------------- INIT ---------------------
+readonly VERSION="1.41_20200515"
+readonly TITLE="OpenBOR - Configurador de Controles"
 readonly MASTERCONF_DIR="/home/pi/RetroPie/roms/ports/openbor"
 readonly KEYCONF_DIR="/opt/retropie/configs/ports/openbor/Saves"
 readonly JOYPAD_GITHUB="http://raw.githubusercontent.com/fredcobain/RetroPie-OpenBOR-scripts/master/joypad/joypadlist.txt"
 ######
-readonly BACKTITLE=" cyperghosts OpenBOR easy Joypad config "
+readonly BACKTITLE=" Fredopie - Configurador de Controles (OpenBor) "
 ###### --------------------- INIT ---------------------
 
 BOR_file="$(basename "$3")"
@@ -112,7 +114,7 @@ function get_file() {
     elif [[ -s "$cfg_location/$filename" ]]; then
         show_msg "Config file successfully downloaded! Setted file to:\n\n$BOR_cfg" " Parabens! Config file ok! "
     else
-        show_msg "Erro no download a partir de:\n\n$git_address\n\nOr file contains zerofiles\n\nSorry for that...." " Error: Setup config file! "
+        show_msg "Erro no download a partir de:\n\n$git_address\n\nOu nao existem arquivos\n\nDesculpe...." " Erro: Setup de arquivo de configuracao! "
     fi
 
 }
