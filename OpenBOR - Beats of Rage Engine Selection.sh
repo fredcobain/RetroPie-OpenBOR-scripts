@@ -17,7 +17,7 @@
 # For https://retropie.org.uk/
 
 ###### --------------------- INIT ---------------------
-readonly VERSION="1.41_20200514"
+readonly VERSION="1.41_20200515"
 readonly TITLE="OpenBOR - Seletor de Jogos"
 readonly ROOTDIR="/opt/retropie"
 readonly BORBASE_DIR="/home/pi/RetroPie/roms/ports/openbor"
@@ -166,7 +166,7 @@ while true; do
                 BOR_cfg="$KEYCONF_DIR${BOR_file#*.}.cfg"
                 if [[ ! -f $BOR_cfg && -f $MASTERCONF_DIR/master.bor.cfg  ]]; then
                     cp "$MASTERCONF_DIR/master.bor.cfg" "$BOR_cfg"
-                    show_msg "Arquivo de conf. copiado de:\n$MASTERCONF_DIR/master.bor.cfg\n    para:\n$BOR_cfg\n\nStarting game \"${BOR_file:7:-4}\" em alguns segundos!" "8" " Configurando Controles! "
+                    show_msg "Arquivo de conf. copiado de:\n$MASTERCONF_DIR/master.bor.cfg\n    para:\n$BOR_cfg\n\nIniciando o jogo \"${BOR_file:7:-4}\" em alguns segundos!" "8" " Configurando Controles! "
                 elif [[ ! -f $BOR_cfg && ! -f $MASTERCONF_DIR/master.bor.cfg  ]]; then
                     show_yesno "Jogo \"${BOR_file:7:-4}\" sem arquivo de configuracao!\n\nConfigure os controles antes de ir para o jogo\n\nSelecione NAO se deseja iniciar sem essa configuracao....\nSe lembre de configurar os contorles no jogo! Essa opcao so esta disponivel uma vez!" " Configuracao de Controle! "
                     [[ $? == 0 ]] && continue
